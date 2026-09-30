@@ -21,4 +21,16 @@ async function createProduct(name, price) {
     return product
 }
 
-module.exports = {getAllProducts,getProductById,createProduct}
+async function updateProduct(id, name, price) {
+    const products = await delayReadData()
+    const product = products.find((product) => product.id == id)
+    if (!product) {
+        return null
+    }
+    product.name = name
+    product.price = Number(price)
+    await writeData(products)
+    return product
+}
+
+module.exports = {getAllProducts,getProductById,createProduct,updateProduct}
