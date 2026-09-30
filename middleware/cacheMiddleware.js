@@ -1,3 +1,5 @@
+const { clear } = require("console")
+
 const cache = {}
 
 const TTL = 60 * 1000
@@ -25,4 +27,10 @@ function cacheMiddleware(req, res, next) {
     next()
 }
 
-module.exports = {cache,cacheMiddleware}
+function clearCache() {
+    Object.keys(cache).forEach((key) => {
+        delete cache[key]
+    })
+}
+
+module.exports = {cache,cacheMiddleware,clearCache}
