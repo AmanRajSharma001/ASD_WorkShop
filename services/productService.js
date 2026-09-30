@@ -33,4 +33,20 @@ async function updateProduct(id, name, price) {
     return product
 }
 
-module.exports = {getAllProducts,getProductById,createProduct,updateProduct}
+async function patchProduct(id, name, price) {
+    const products = await delayReadData()
+    const product = products.find((product) => product.id == id)
+    if (!product) {
+        return null
+    }
+    if (name !== undefined) {
+        product.name = name
+    }
+    if (price !== undefined) {
+        product.price = Number(price)
+    }
+    await writeData(products)
+    return product
+}
+
+module.exports = {getAllProducts,getProductById,createProduct,updateProduct,patchProduct}
