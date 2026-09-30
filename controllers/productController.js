@@ -1,4 +1,4 @@
-const {getAllProducts,getProductById,createProduct,updateProduct,patchProduct} = require("../services/productService")
+const {getAllProducts,getProductById,createProduct,updateProduct,patchProduct,deleteProduct} = require("../services/productService")
 
 const { clearCache } = require("../middleware/cacheMiddleware")
 
@@ -81,4 +81,23 @@ async function patchProductController(req, res) {
     }
 }
 
-module.exports = {getProducts,getProduct,postProduct,putProduct,patchProductController}
+
+async function deleteProductController(req, res) {
+    const id = Number(req.params.id)
+    try {
+        const product = await deleteProduct(id)
+        if (!product) {
+            return res.status(404).json({
+                error: `Product with id: ${id} not found!`
+            })
+        }
+        clearCache()
+        return res.status(200).json(product)
+    } catch (err) {
+        return res.status(500).json({
+            error: "Internal server error"
+        })
+    }
+}
+
+module.exports = {getProducts,getProduct,postProduct,putProduct,patchProductController,deleteProductController}
