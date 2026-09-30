@@ -1,5 +1,7 @@
 const {getAllProducts,getProductById,createProduct} = require("../services/productService")
 
+const { clearCache } = require("../middleware/cacheMiddleware")
+
 async function getProducts(req, res) {
     try {
         const products = await getAllProducts()
@@ -32,6 +34,7 @@ async function postProduct(req, res) {
     try {
         const { name, price } = req.body
         const product = await createProduct(name, price)
+        clearCache()
         return res.status(201).json(product)
     } catch (err) {
         return res.status(400).json({
