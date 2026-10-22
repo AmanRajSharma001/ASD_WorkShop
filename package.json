@@ -12,6 +12,8 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "apipulse-express": "^1.0.1",
+    "cjs-to-esm-converter": "^0.1.0",
     "express": "^5.2.1",
     "nodemon": "^3.1.14"
   }
